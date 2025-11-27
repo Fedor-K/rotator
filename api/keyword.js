@@ -16,7 +16,10 @@ export default function handler(req, res) {
 
   const index = Math.floor(Math.random() * keywords.length);
 
-  const keyword = String(keywords[index]); // <– ГАРАНТИЯ КАВЫЧЕК
+  // Добавляем кавычки внутри строки
+  const keyword = `"${keywords[index]}"`;  
+  // То есть если ключ "Italian translator",
+  // то keyword станет "\"Italian translator\""
 
   res.status(200).json({ keyword });
 }

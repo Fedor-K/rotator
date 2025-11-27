@@ -14,8 +14,9 @@ export default function handler(req, res) {
     "russian interpreter"
   ];
 
-  // цикличная ротация через верцел-инстанс
   const index = Math.floor(Math.random() * keywords.length);
 
-  res.status(200).json({ keyword: keywords[index] });
+  const keyword = String(keywords[index]); // <– ГАРАНТИЯ КАВЫЧЕК
+
+  res.status(200).json({ keyword });
 }

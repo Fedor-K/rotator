@@ -1,103 +1,98 @@
-export default function handler(req, res) {
+module.exports = (req, res) => {
   const keywords = [
-   "french translator"
-"chinese translator"
-"japanese translator"
-"arabic translator"
-"portuguese translator"
-"italian translator"
-"turkish translator"
-"korean translator"
-"hindi translator"
-"polish translator"
-"dutch translator"
-"swedish translator"
-"norwegian translator"
-"danish translator"
-"finnish translator"
-"czech translator"
-"greek translator"
-"ukrainian translator"
-"english interpreter"
-"spanish interpreter"
-"russian interpreter"
-"german interpreter"
-"french interpreter"
-"chinese interpreter"
-"japanese interpreter"
-"arabic interpreter"
-"portuguese interpreter"
-"italian interpreter"
-"turkish interpreter"
-"korean interpreter"
-"hindi interpreter"
-"polish interpreter"
-"dutch interpreter"
-"swedish interpreter"
-"norwegian interpreter"
-"danish interpreter"
-"finnish interpreter"
-"czech interpreter"
-"greek interpreter"
-"ukrainian interpreter"
-"web developer"
-"frontend developer"
-"backend developer"
-"full stack developer"
-"mobile app developer"
-"ios developer"
-"android developer"
-"software engineer"
-"react developer"
-"node.js developer"
-"python developer"
-"ai engineer"
-"data scientist"
-"data analyst"
-"qa engineer"
-"ui designer"
-"ux designer"
-"ui ux designer"
-"graphic designer"
-"logo designer"
-"video editor"
-"motion designer"
-"3d artist"
-"copywriter"
-"content writer"
-"seo specialist"
-"smm manager"
-"email marketer"
-"cold email specialist"
-"ppc specialist"
-"google ads specialist"
-"facebook ads specialist"
-"product designer"
-"project manager"
-"virtual assistant"
-"account manager"
-"sales manager"
-"business consultant"
-"marketing strategist"
-"brand designer"
-"illustrator"
-"content creator"
-"tiktok content creator"
-"youtube manager"
-"community manager"
-"customer support specialist"
-"technical writer"
-"devops engineer"
-"cloud engineer"
-"cybersecurity analyst"
+    "french translator",
+    "chinese translator",
+    "japanese translator",
+    "arabic translator",
+    "portuguese translator",
+    "italian translator",
+    "turkish translator",
+    "korean translator",
+    "hindi translator",
+    "polish translator",
+    "dutch translator",
+    "swedish translator",
+    "norwegian translator",
+    "danish translator",
+    "finnish translator",
+    "czech translator",
+    "greek translator",
+    "ukrainian translator",
+    "english interpreter",
+    "spanish interpreter",
+    "russian interpreter",
+    "german interpreter",
+    "french interpreter",
+    "chinese interpreter",
+    "japanese interpreter",
+    "arabic interpreter",
+    "portuguese interpreter",
+    "italian interpreter",
+    "turkish interpreter",
+    "korean interpreter",
+    "hindi interpreter",
+    "polish interpreter",
+    "dutch interpreter",
+    "swedish interpreter",
+    "norwegian interpreter",
+    "danish interpreter",
+    "finnish interpreter",
+    "czech interpreter",
+    "greek interpreter",
+    "ukrainian interpreter",
+    "web developer",
+    "frontend developer",
+    "backend developer",
+    "full stack developer",
+    "mobile app developer",
+    "ios developer",
+    "android developer",
+    "software engineer",
+    "react developer",
+    "node.js developer",
+    "python developer",
+    "ai engineer",
+    "data scientist",
+    "data analyst",
+    "qa engineer",
+    "ui designer",
+    "ux designer",
+    "ui ux designer",
+    "graphic designer",
+    "logo designer",
+    "video editor",
+    "motion designer",
+    "3d artist",
+    "copywriter",
+    "content writer",
+    "seo specialist",
+    "smm manager",
+    "email marketer",
+    "cold email specialist",
+    "ppc specialist",
+    "google ads specialist",
+    "facebook ads specialist",
+    "product designer",
+    "project manager",
+    "virtual assistant",
+    "account manager",
+    "sales manager",
+    "business consultant",
+    "marketing strategist",
+    "brand designer",
+    "illustrator",
+    "content creator",
+    "tiktok content creator",
+    "youtube manager",
+    "community manager",
+    "customer support specialist",
+    "technical writer",
+    "devops engineer",
+    "cloud engineer",
+    "cybersecurity analyst"
   ];
 
-  const index = Math.floor(Math.random() * keywords.length);
-
-  // Добавляем кавычки внутри строки
-  const keyword = `"${keywords[index]}"`;  
-  // То есть если ключ "Italian translator",
-  // то keyword станет "\"Italian translator\""
+  const keyword = `"${keywords[Math.floor(Math.random() * keywords.length)]}"`;
 
   res.status(200).json({ keyword });
-}
+};

@@ -17,7 +17,6 @@ module.exports = (req, res) => {
     "polish translator",
     "dutch translator",
     "swedish translator",
-    "norwegian translator",
     "danish translator",
     "czech translator",
     "greek translator",
@@ -46,8 +45,6 @@ module.exports = (req, res) => {
     "ukrainian interpreter",
     "editor",
     "ppc specialist",
-    "looking for translator",
-    "looking for interpreter",
     "localization manager"
   ];
 

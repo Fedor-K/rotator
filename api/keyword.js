@@ -1,88 +1,125 @@
 module.exports = (req, res) => {
-  // Optimized keyword list based on job market data:
-  // - Removed rare languages with <1% job postings (burmese, swahili, etc.)
-  // - Added "hiring"/"remote" modifiers for better job filtering
-  // - Focused on high-conversion keywords
+  /**
+   * Freelance LinkedIn Keyword Rotator
+   *
+   * 77 keywords for finding freelance/contract opportunities.
+   * Rotation: every 10 minutes, next keyword in list.
+   * Full cycle: 77 × 10 min = ~13 hours
+   */
 
   const keywords = [
-    // Generic with job modifiers (high conversion)
-    "translator hiring",
-    "interpreter hiring",
-    "translator remote",
-    "interpreter remote",
-    "looking for translator",
-    "looking for interpreter",
-    "hiring translator",
-    "hiring interpreter",
+    // === General Freelance Phrases (17) ===
+    "looking for freelance",
+    "hiring freelancer",
+    "need a freelancer",
+    "seeking freelancer",
+    "freelance opportunity",
+    "freelancer needed",
+    "looking for contractor",
+    "hiring contractor",
+    "contract opportunity",
+    "need contractor",
+    "project based",
+    "short term project",
+    "quick project",
+    "gig opportunity",
+    "immediate project",
+    "hourly rate",
+    "per project",
+
+    // === Engineering (8) ===
+    "freelance developer",
+    "freelance engineer",
+    "freelance programmer",
+    "contract developer",
+    "freelance react",
+    "freelance node",
+    "freelance fullstack",
+    "freelance backend",
+
+    // === Design (7) ===
+    "freelance designer",
+    "freelance UX",
+    "freelance UI",
+    "freelance product designer",
+    "contract designer",
+    "freelance web designer",
+    "freelance graphic designer",
+
+    // === Translation & Language (18) ===
+    "freelance translator",
+    "freelance translation",
+    "translation project",
     "need translator",
-    "need interpreter",
-
-    // Tier 1: Top demand languages
-    "english translator",
-    "english interpreter",
-    "chinese translator",
-    "chinese interpreter",
-    "spanish translator",
-    "spanish interpreter",
-
-    // Tier 2: High demand
-    "japanese translator",
-    "japanese interpreter",
-    "french translator",
-    "french interpreter",
-    "korean translator",
-    "korean interpreter",
-    "arabic translator",
-    "arabic interpreter",
-    "german translator",
-    "german interpreter",
-    "russian translator",
-    "russian interpreter",
-
-    // Tier 3: Medium demand
-    "portuguese translator",
-    "portuguese interpreter",
-    "italian translator",
-    "italian interpreter",
-    "dutch translator",
-    "polish translator",
-    "turkish translator",
-    "turkish interpreter",
-    "vietnamese translator",
-    "thai translator",
-    "indonesian translator",
-    "hindi translator",
-    "hindi interpreter",
-    "ukrainian translator",
-    "ukrainian interpreter",
-    "hebrew translator",
-    "persian translator",
-
-    // Specialized roles (high conversion)
-    "localization",
-    "localization manager",
-    "localization specialist",
+    "looking for translator",
+    "hiring translator",
+    "localization project",
+    "freelance localization",
+    "app localization",
     "game localization",
-    "software localization",
-    "conference interpreter",
-    "simultaneous interpreter",
-    "medical interpreter",
-    "legal interpreter",
-    "court interpreter",
+    "website localization",
+    "freelance interpreter",
+    "freelance subtitling",
+    "freelance transcription",
+    "freelance proofreader",
+    "freelance editor language",
+    "voice over freelance",
+    "dubbing freelance",
 
-    // Other valuable roles
-    "linguist",
-    "subtitler",
-    "transcriber",
-    "voiceover",
-    "mtpe",
-    "post editor",
-    "proofreader",
-    "nlp linguist",
-    "multilingual copywriter"
+    // === Writing (8) ===
+    "freelance writer",
+    "freelance copywriter",
+    "freelance content writer",
+    "contract writer",
+    "freelance editor",
+    "freelance blogger",
+    "freelance technical writer",
+    "freelance ghostwriter",
+
+    // === Marketing (8) ===
+    "freelance marketing",
+    "freelance growth",
+    "contract marketing",
+    "freelance social media",
+    "freelance SEO",
+    "freelance PPC",
+    "freelance content marketing",
+    "freelance email marketing",
+
+    // === Creative (6) ===
+    "freelance video editor",
+    "freelance motion",
+    "freelance animator",
+    "freelance illustrator",
+    "freelance photographer",
+    "contract creative",
+
+    // === Other (5) ===
+    "freelance virtual assistant",
+    "freelance consultant",
+    "freelance project manager",
+    "freelance data analyst",
+    "freelance VA",
   ];
 
-  const keyword = `"${keywords[Math.floor(Math.random() * keywords.length)]}"`;
+  // Time-based rotation: every 10 minutes = next keyword
+  const now = new Date();
+  const minutesSinceMidnight = now.getUTCHours() * 60 + now.getUTCMinutes();
+  const tenMinuteSlot = Math.floor(minutesSinceMidnight / 10);
+  const index = tenMinuteSlot % keywords.length;
 
-  res.status(200).json({ keyword });
+  const keyword = `"${keywords[index]}"`;
+
+  // Calculate seconds until next keyword
+  const currentMinute = now.getUTCMinutes();
+  const currentSecond = now.getUTCSeconds();
+  const minutesInSlot = currentMinute % 10;
+  const nextChangeIn = (10 - minutesInSlot) * 60 - currentSecond;
+
+  res.status(200).json({
+    keyword,
+    index,
+    total: keywords.length,
+    nextChangeIn,
+  });
 };

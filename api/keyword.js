@@ -3,11 +3,7 @@ module.exports = (req, res) => {
    * Freelance LinkedIn Keyword Rotator
    *
    * 77 keywords for finding freelance/contract opportunities.
-   * Sequential rotation: each request returns next keyword.
-   *
-   * Usage:
-   *   GET /api/keyword         → starts from 0
-   *   GET /api/keyword?last=5  → returns keyword[6]
+   * Returns random keyword on each request.
    */
 
   const keywords = [
@@ -110,12 +106,8 @@ module.exports = (req, res) => {
   res.setHeader('Pragma', 'no-cache');
   res.setHeader('Expires', '0');
 
-  // Get last index from query param, default to -1 (so first call returns index 0)
-  const lastIndex = parseInt(req.query.last, 10);
-  const validLast = isNaN(lastIndex) ? -1 : lastIndex;
-
-  // Next index (wraps around)
-  const index = (validLast + 1) % keywords.length;
+  // Random keyword
+  const index = Math.floor(Math.random() * keywords.length);
   const keyword = `"${keywords[index]}"`;
 
   res.status(200).json({

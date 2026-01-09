@@ -102,6 +102,11 @@ module.exports = (req, res) => {
     "freelance VA",
   ];
 
+  // Disable caching
+  res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+  res.setHeader('Pragma', 'no-cache');
+  res.setHeader('Expires', '0');
+
   // Time-based rotation: every 10 minutes = next keyword
   const now = new Date();
   const minutesSinceMidnight = now.getUTCHours() * 60 + now.getUTCMinutes();
@@ -121,5 +126,10 @@ module.exports = (req, res) => {
     index,
     total: keywords.length,
     nextChangeIn,
+    debug: {
+      utcTime: now.toISOString(),
+      minutesSinceMidnight,
+      tenMinuteSlot,
+    }
   });
 };

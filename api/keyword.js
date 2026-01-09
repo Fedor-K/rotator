@@ -3,8 +3,11 @@ module.exports = (req, res) => {
    * Freelance LinkedIn Keyword Rotator
    *
    * 77 keywords for finding freelance/contract opportunities.
-   * Rotation: every 10 minutes, next keyword in list.
-   * Full cycle: 77 × 10 min = ~13 hours
+   * Sequential rotation: each request returns next keyword.
+   *
+   * Usage:
+   *   GET /api/keyword         → starts from 0
+   *   GET /api/keyword?last=5  → returns keyword[6]
    */
 
   const keywords = [
@@ -107,29 +110,17 @@ module.exports = (req, res) => {
   res.setHeader('Pragma', 'no-cache');
   res.setHeader('Expires', '0');
 
-  // Time-based rotation: every 10 minutes = next keyword
-  const now = new Date();
-  const minutesSinceMidnight = now.getUTCHours() * 60 + now.getUTCMinutes();
-  const tenMinuteSlot = Math.floor(minutesSinceMidnight / 10);
-  const index = tenMinuteSlot % keywords.length;
+  // Get last index from query param, default to -1 (so first call returns index 0)
+  const lastIndex = parseInt(req.query.last, 10);
+  const validLast = isNaN(lastIndex) ? -1 : lastIndex;
 
+  // Next index (wraps around)
+  const index = (validLast + 1) % keywords.length;
   const keyword = `"${keywords[index]}"`;
-
-  // Calculate seconds until next keyword
-  const currentMinute = now.getUTCMinutes();
-  const currentSecond = now.getUTCSeconds();
-  const minutesInSlot = currentMinute % 10;
-  const nextChangeIn = (10 - minutesInSlot) * 60 - currentSecond;
 
   res.status(200).json({
     keyword,
     index,
     total: keywords.length,
-    nextChangeIn,
-    debug: {
-      utcTime: now.toISOString(),
-      minutesSinceMidnight,
-      tenMinuteSlot,
-    }
   });
 };
